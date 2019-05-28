@@ -1,8 +1,6 @@
 https://{$DOMAIN_NAME} {
     root /voyant
 
-    tls self_signed
-    
     proxy / voyant:8888 {
         header_upstream Host {host}
         header_upstream X-Real-IP {remote}

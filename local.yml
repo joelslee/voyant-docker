@@ -1,13 +1,13 @@
 version: '3'
 
 volumes:
-  caddy: {}
+  caddy_local: {}
 
 services:
   voyant:
     build:
       context: .
-      dockerfile: ./compose/voyant/Dockerfile
+      dockerfile: ./compose/voyant/local/Dockerfile
     image: voyant_app
     working_dir: /var/www/voyant
     command: java -jar VoyantServer.jar --headless=true
@@ -15,15 +15,15 @@ services:
   caddy:
     build:
       context: .
-      dockerfile: ./compose/caddy/Dockerfile
-    image: voyant_caddy
+      dockerfile: ./compose/caddy/local/Dockerfile
+    image: voyant_caddy_local
     depends_on:
       - voyant
     volumes:
-      - caddy:/root/.caddy
+      - caddy_local:/root/.caddy
       - ./corpora:/voyant/corpora
     env_file:
-      - ./compose/envs/caddy
+      - ./compose/envs/local/caddy
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
